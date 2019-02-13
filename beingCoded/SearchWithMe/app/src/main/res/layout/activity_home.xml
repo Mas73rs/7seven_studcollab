@@ -20,19 +20,18 @@
         android:id="@+id/setupImage"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginTop="32dp"
         android:src="@mipmap/user_prefere"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setuptoolbar" />
 
     <EditText
-        android:id="@+id/setupName"
+        android:id="@+id/namesetup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/edit_background"
@@ -47,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/setupImage" />
 
     <EditText
-        android:id="@+id/setupPhoneNumber"
+        android:id="@+id/setupPhone"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -63,7 +62,7 @@
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setupName" />
+        app:layout_constraintTop_toBottomOf="@+id/namesetup" />
 
     <EditText
         android:id="@+id/setupQuartier"
@@ -82,7 +81,7 @@
         android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setupPhoneNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/setupPhone" />
 
     <Button
         android:id="@+id/setupButton"
@@ -100,8 +99,10 @@
         android:textColor="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setupQuartier" />
+        app:layout_constraintTop_toBottomOf="@+id/setupQuartier"
+        app:layout_constraintVertical_bias="0.884" />
 
     <TextView
         android:id="@+id/textView"
@@ -115,9 +116,26 @@
         android:layout_marginBottom="8dp"
         android:text="cliquez sur l'avatar pour modifier l'image de profil"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/setupName"
+        app:layout_constraintBottom_toTopOf="@+id/namesetup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setupImage" />
+
+    <ProgressBar
+        android:id="@+id/setupprogressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/setupButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setupQuartier"
+        tools:visibility="invisible" />
 
 </android.support.constraint.ConstraintLayout>
