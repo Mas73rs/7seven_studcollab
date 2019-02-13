@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/termial_button"
+        android:title="Terminals"
+        android:icon="@mipmap/terminal"/>
+    <item
+        android:id="@+id/a_propos"
+        android:title="A Propos"
+        android:icon="@mipmap/moi"/>
+
+</menu>

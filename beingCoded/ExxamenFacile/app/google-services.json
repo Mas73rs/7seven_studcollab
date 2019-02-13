@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "602185317751",
+    "firebase_url": "https://exxamenfacile.firebaseio.com",
+    "project_id": "exxamenfacile",
+    "storage_bucket": "exxamenfacile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602185317751:android:12d8f6e3851a313d",
+        "android_client_info": {
+          "package_name": "cm.studio.devbee.exxamenfacile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602185317751-eifdekahp1h3l473336hb4rss0pvhdn2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cm.studio.devbee.exxamenfacile",
+            "certificate_hash": "6a426af47cd8207df1170fdc9fdf77d2d046ff9d"
+          }
+        },
+        {
+          "client_id": "602185317751-2q7e13somj3l6s2b9mo07np5tdn4af1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXfs0TwiCcdsFhnswW-mjisgJZpIiTwgU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602185317751-2q7e13somj3l6s2b9mo07np5tdn4af1j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
