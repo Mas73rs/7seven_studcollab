@@ -26,6 +26,7 @@ import android.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -34,11 +35,13 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity {
-
+    private FirebaseFirestore firebaseFirestore;
     private android.support.v7.widget.Toolbar toolbar;
     private CircleImageView circleImageView;
     private EditText name;
@@ -49,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
+    private String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +64,64 @@ public class HomeActivity extends AppCompatActivity {
         liaison();
         CheckAndroidVersion ();
         progressBar.setVisibility ( View.INVISIBLE );
+
+        savebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                final String user_name = name.getText().toString();
+                final String user_Phone_number=phone.getText().toString();
+                final String user_Domicile=domicile.getText().toString();
+                if (!TextUtils.isEmpty(user_name)&&!TextUtils.isEmpty(user_Phone_number)&&!TextUtils.isEmpty(user_Domicile)&&circleImageView!=null){
+                    user_id =firebaseAuth.getCurrentUser().getUid();
+                    StorageReference image_path= storageReference.child("Image_de_profile").child(user_id + ".jpg");
+                    image_path.putFile(mImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if (task.isSuccessful()){
+
+                                Uri download=task.getResult().getUploadSessionUri ();
+                                Map <String,String> user_profil = new HashMap (  );
+                                user_profil.put ( "image",download.toString () );
+                                user_profil.put ( "name",user_name );
+                                user_profil.put ( "phone",user_Phone_number );
+                                user_profil.put ( "residence",user_Domicile );
+                                firebaseFirestore.collection ( "User" ).document ( user_id ).set ( user_profil ).addOnCompleteListener ( new OnCompleteListener<Void> () {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful ()){
+                                            Toast.makeText ( HomeActivity.this ,"vos donnees on ete correctement prise en compte",Toast.LENGTH_LONG).show ();
+                                            Intent goToAcceuille = new Intent ( HomeActivity.this,AcceuilActivity.class );
+                                            startActivity ( goToAcceuille );
+                                            finish ();
+                                        }else {
+
+                                            String error=task.getException ().getMessage ();
+                                            Toast.makeText ( HomeActivity.this ,error,Toast.LENGTH_LONG).show ();
+                                        }
+                                        progressBar.setVisibility(View.INVISIBLE);
+                                    }
+                                } );
+                                Toast.makeText(HomeActivity.this," profil enregistre ",Toast.LENGTH_LONG).show ();
+                                Intent goToAcceuille = new Intent ( HomeActivity.this,AcceuilActivity.class );
+                                startActivity ( goToAcceuille );
+                                finish ();
+
+                            }else{
+                                String error= task.getException().getMessage();
+                                Toast.makeText(HomeActivity.this,error,Toast.LENGTH_LONG).show ();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void liaison(){
+        firebaseFirestore=FirebaseFirestore.getInstance ();
         circleImageView=findViewById ( R.id.setupImage );
         name=findViewById ( R.id.setupName );
         phone=findViewById ( R.id.setupPhoneNumber );
@@ -71,6 +130,44 @@ public class HomeActivity extends AppCompatActivity {
         progressBar=findViewById ( R.id.setupprogressBar );
         firebaseAuth=FirebaseAuth.getInstance ();
         storageReference=FirebaseStorage.getInstance ().getReference ();
+        user_id=firebaseAuth.getCurrentUser ().getUid ();
+        progressBar.setVisibility ( View.VISIBLE );
+        savebutton.setEnabled ( false );
+
+        firebaseFirestore.collection ("User").document (user_id).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> () {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful ()){
+
+                    if ( task.getResult ().exists ()){
+
+                        Toast.makeText(HomeActivity.this,"reception des donnes utilisateur termine",Toast.LENGTH_SHORT).show ();
+                        String myname = task.getResult ().getString ("name");
+                        String myphone = task.getResult ().getString ("phone");
+                        String myresidence = task.getResult ().getString ("residence");
+                        String myimage = task.getResult ().getString ("image");
+                        mImageUri=Uri.parse ( myimage );
+                        name.setText ( myname );
+                        phone.setText ( myphone );
+                        domicile.setText ( myresidence );
+                        /*RequestOptions placeRquestHolder =new RequestOptions ();
+                        placeRquestHolder.placeholder ( R.mipmap.user_prefere);
+                        Glide.with (HomeActivity.this).setDefaultRequestOptions (  placeRquestHolder).load ( myimage ).into ( circleImageView );
+*/
+                    }
+
+                }else {
+                    String error= task.getException().getMessage();
+                    Toast.makeText(HomeActivity.this,error,Toast.LENGTH_LONG).show ();
+
+                }
+                progressBar.setVisibility ( View.INVISIBLE );
+                savebutton.setEnabled ( true );
+
+            }
+        } );
+
+
         circleImageView.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -78,7 +175,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         } );
 
-        lancerEnregistrement();
     }
 
 
@@ -90,9 +186,13 @@ public class HomeActivity extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace ();
             }
+            //new picimage()
+            pickImage();
         }
         else {
+            //pickImage();
             pickImage();
+
         }
     }
 
@@ -144,41 +244,6 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void lancerEnregistrement(){
-        savebutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String user_name = name.getText().toString();
-                String user_Phone_number=phone.getText().toString();
-                String user_Domicile=domicile.getText().toString();
-                if (!TextUtils.isEmpty(user_name)&&!TextUtils.isEmpty(user_Phone_number)&&!TextUtils.isEmpty(user_Domicile)&&circleImageView!=null){
-                    String user_id =firebaseAuth.getCurrentUser().getUid();
-                    StorageReference image_path= storageReference.child("Image_de_profile").child(user_id + ".jpg");
-                    image_path.putFile(mImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()){
-
-                                Uri download=task.getResult().getUploadSessionUri ();
-                                progressBar.setVisibility ( View.INVISIBLE );
-                                Toast.makeText(HomeActivity.this," profil enregistre ",Toast.LENGTH_LONG).show ();
-                                Intent goToAcceuille = new Intent ( HomeActivity.this,AcceuilleActivity.class );
-                                startActivity ( goToAcceuille );
-                                finish ();
-
-                            }else{
-                                String error= task.getException().getMessage();
-                                Toast.makeText(HomeActivity.this,error,Toast.LENGTH_LONG);
-
-                            }
-                            progressBar.setVisibility(View.INVISIBLE);
-                        }
-                    });
-                }
-            }
-        });
-
-    }
 
 
 }

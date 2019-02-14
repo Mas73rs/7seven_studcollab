@@ -112,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     }*/
 
     private void goTomain() {
-        Intent goToHome=new Intent ( LoginActivity.this,AcceuilleActivity.class );
+        Intent goToHome=new Intent ( LoginActivity.this,AcceuilActivity.class );
         startActivity ( goToHome );
         finish ();
     }
