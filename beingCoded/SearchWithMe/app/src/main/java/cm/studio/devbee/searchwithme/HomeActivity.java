@@ -31,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -150,10 +151,11 @@ public class HomeActivity extends AppCompatActivity {
                         name.setText ( myname );
                         phone.setText ( myphone );
                         domicile.setText ( myresidence );
-                        /*RequestOptions placeRquestHolder =new RequestOptions ();
+                      /*  RequestOptions placeRquestHolder =new RequestOptions ();
                         placeRquestHolder.placeholder ( R.mipmap.user_prefere);
                         Glide.with (HomeActivity.this).setDefaultRequestOptions (  placeRquestHolder).load ( myimage ).into ( circleImageView );
-*/
+*/                      Picasso.get().load ( myimage ).into ( circleImageView );
+
                     }
 
                 }else {

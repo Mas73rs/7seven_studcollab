@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <!-- android:theme="@style/Base.Theme.AppCompat" -->
     <application
         android:allowBackup="true"
@@ -29,7 +30,7 @@
         <activity
             android:name=".AcceuilActivity"
             android:label="@string/title_activity_acceuil"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
