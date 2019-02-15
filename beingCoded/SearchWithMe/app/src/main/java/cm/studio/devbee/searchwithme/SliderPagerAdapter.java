@@ -30,6 +30,11 @@ public class SliderPagerAdapter extends PagerAdapter {
     }
 
 
+    public SliderPagerAdapter(Context mcontext, List<Slider> sliderList) {
+        this.mcontext = mcontext;
+        this.sliderList = sliderList;
+    }
+
     @Override
     public int getCount() {
         return sliderList.size();
