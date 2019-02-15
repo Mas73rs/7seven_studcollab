@@ -35,14 +35,14 @@ public class RechercheActivity extends AppCompatActivity {
                 startActivity(goToPost);
             }
         });
+
+        slideList =new ArrayList<>();
+        slideList.add(new Slider(R.drawable.slide1,"ne perdez plus jamais /nce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide3,"ne perdez plus jamais /nce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
         SliderPagerAdapter adapter = new SliderPagerAdapter(RechercheActivity.this,slideList);
         viewPagerSlider.setAdapter(adapter);
-        slideList =new ArrayList<>();
-        slideList.add(new Slider(R.drawable.slide1,"ne perdez plus jamais ce qui vous est precieux"));
-        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
-        slideList.add(new Slider(R.drawable.slide3,"ne perdez plus jamais ce qui vous est precieux"));
-        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
-
 
     }
 
