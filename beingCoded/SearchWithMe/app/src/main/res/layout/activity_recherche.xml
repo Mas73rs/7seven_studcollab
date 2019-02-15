@@ -40,7 +40,6 @@
         android:text="En cour de recherche"
         android:textColor="#000"
         android:textSize="20sp"
-        app:fontFamily="@font/abril_fatface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
