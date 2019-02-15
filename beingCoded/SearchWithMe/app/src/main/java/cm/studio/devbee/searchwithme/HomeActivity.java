@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView ( R.layout.activity_home );
         toolbar=findViewById ( R.id.setuptoolbar );
         setSupportActionBar ( toolbar );
-       getSupportActionBar ().setTitle ( "parametre du profil" );
+        getSupportActionBar ().setTitle ( "parametre du profil" );
         liaison();
         CheckAndroidVersion ();
         progressBar.setVisibility ( View.INVISIBLE );

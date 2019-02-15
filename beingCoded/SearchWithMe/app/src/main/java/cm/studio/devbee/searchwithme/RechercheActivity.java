@@ -1,14 +1,17 @@
 package cm.studio.devbee.searchwithme;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class RechercheActivity extends AppCompatActivity {
     private Toolbar toolbaracceuil;
+    private FloatingActionButton floatingActionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +19,15 @@ public class RechercheActivity extends AppCompatActivity {
         toolbaracceuil=findViewById ( R.id.sacceuilletoolbar );
         setSupportActionBar ( toolbaracceuil );
         getSupportActionBar ().setTitle ( "flux de recherche" );
+        floatingActionButton=findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent goToPost = new Intent(RechercheActivity.this,PostActivity.class);
+                startActivity(goToPost);
+            }
+        });
+
     }
 
     @Override
