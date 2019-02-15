@@ -154,7 +154,8 @@ public class HomeActivity extends AppCompatActivity {
                       /*  RequestOptions placeRquestHolder =new RequestOptions ();
                         placeRquestHolder.placeholder ( R.mipmap.user_prefere);
                         Glide.with (HomeActivity.this).setDefaultRequestOptions (  placeRquestHolder).load ( myimage ).into ( circleImageView );
-*/                      Picasso.get().load ( myimage ).into ( circleImageView );
+*/                     // Picasso.get().load ( myimage ).into ( circleImageView );
+                        Picasso.with(HomeActivity.this).load(mImageUri).into(circleImageView);
 
                     }
 

@@ -30,7 +30,7 @@
         <activity
             android:name=".AcceuilActivity"
             android:label="@string/title_activity_acceuil"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
