@@ -1,5 +1,6 @@
 package cm.studio.devbee.searchwithme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,7 @@ public class AcceuilActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acceuil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        getSupportActionBar ().setTitle ( "flux de recherche" );
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -80,8 +82,9 @@ public class AcceuilActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
+        if (id == R.id.ic_profil) {
+            Intent goToProfilSetting = new Intent(AcceuilActivity.this,HomeActivity.class);
+            startActivity(goToProfilSetting);
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
