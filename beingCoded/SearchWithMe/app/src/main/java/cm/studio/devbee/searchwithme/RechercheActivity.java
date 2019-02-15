@@ -2,21 +2,29 @@ package cm.studio.devbee.searchwithme;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RechercheActivity extends AppCompatActivity {
     private Toolbar toolbaracceuil;
     private FloatingActionButton floatingActionButton;
+    private List<Slider> slideList;
+    private ViewPager viewPagerSlider;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recherche);
         toolbaracceuil=findViewById ( R.id.sacceuilletoolbar );
+        viewPagerSlider=findViewById(R.id.slider_pager);
         setSupportActionBar ( toolbaracceuil );
         getSupportActionBar ().setTitle ( "flux de recherche" );
         floatingActionButton=findViewById(R.id.floatingActionButton);
@@ -27,6 +35,13 @@ public class RechercheActivity extends AppCompatActivity {
                 startActivity(goToPost);
             }
         });
+
+        slideList =new ArrayList<>();
+        slideList.add(new Slider(R.drawable.slide1,"ne perdez plus jamais ce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide3,"ne perdez plus jamais ce qui vous est precieux"));
+        slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais /nce qui vous est precieux"));
+        SliderPagerAdapter sliderAdapter =new SliderPagerAdapter(this,slideList);
 
     }
 
