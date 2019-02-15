@@ -82,6 +82,7 @@ public class HomeActivity extends AppCompatActivity {
                             if (task.isSuccessful()){
 
                                 Uri download=task.getResult().getUploadSessionUri ();
+                                //mImageUri=download;
                                 Map <String,String> user_profil = new HashMap (  );
                                 user_profil.put ( "image",download.toString () );
                                 user_profil.put ( "name",user_name );
@@ -92,7 +93,7 @@ public class HomeActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful ()){
                                             Toast.makeText ( HomeActivity.this ,"vos donnees on ete correctement prise en compte",Toast.LENGTH_LONG).show ();
-                                            Intent goToAcceuille = new Intent ( HomeActivity.this,AcceuilActivity.class );
+                                            Intent goToAcceuille = new Intent ( HomeActivity.this,RechercheActivity.class );
                                             startActivity ( goToAcceuille );
                                             finish ();
                                         }else {
@@ -104,9 +105,9 @@ public class HomeActivity extends AppCompatActivity {
                                     }
                                 } );
                                 Toast.makeText(HomeActivity.this," profil enregistre ",Toast.LENGTH_LONG).show ();
-                                Intent goToAcceuille = new Intent ( HomeActivity.this,AcceuilActivity.class );
-                                startActivity ( goToAcceuille );
-                                finish ();
+                              /*  Intent gotoacceuille = new Intent(HomeActivity.this,RechercheActivity.class);
+                                startActivity ( gotoacceuille );
+                                finish ();*/
 
                             }else{
                                 String error= task.getException().getMessage();
@@ -147,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
                         String myphone = task.getResult ().getString ("phone");
                         String myresidence = task.getResult ().getString ("residence");
                         String myimage = task.getResult ().getString ("image");
-                        mImageUri=Uri.parse ( myimage );
+                        //mImageUri=Uri.parse (myimage);
                         name.setText ( myname );
                         phone.setText ( myphone );
                         domicile.setText ( myresidence );
@@ -155,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                         placeRquestHolder.placeholder ( R.mipmap.user_prefere);
                         Glide.with (HomeActivity.this).setDefaultRequestOptions (  placeRquestHolder).load ( myimage ).into ( circleImageView );
 */                     // Picasso.get().load ( myimage ).into ( circleImageView );
-                        Picasso.with(HomeActivity.this).load(mImageUri).into(circleImageView);
+                        Picasso.with(HomeActivity.this).load(myimage).into(circleImageView);
 
                     }
 

@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         buttonSetup.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Intent into=new Intent ( LoginActivity.this,HomeActivity.class );
+                Intent into=new Intent ( LoginActivity.this,RechercheActivity.class );
                 startActivity ( into );
                 finish ();
             }
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         login_password=findViewById ( R.id.login_password );
         login_button =findViewById ( R.id.login_button );
         gotoregister =findViewById ( R.id.goToRegisterActivity );
-        progressBar=findViewById ( R.id.setupprogressBar );
+
         login ();
     }
 
@@ -70,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
+
+                progressBar =findViewById(R.id.progressBar);
             progressBar.setVisibility ( View.VISIBLE );
 
             String user_email=login_email.getText ().toString ();
@@ -81,7 +83,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful ()){
-                            goTomain();
+                            Intent goToHome=new Intent ( LoginActivity.this,RechercheActivity.class );
+                            startActivity ( goToHome );
+                            finish ();
                         }else{
                             progressBar.setVisibility ( View.INVISIBLE );
                             String error =task.getException ().getMessage ();
@@ -111,9 +115,5 @@ public class LoginActivity extends AppCompatActivity {
         }
     }*/
 
-    private void goTomain() {
-        Intent goToHome=new Intent ( LoginActivity.this,AcceuilActivity.class );
-        startActivity ( goToHome );
-        finish ();
-    }
+
 }
