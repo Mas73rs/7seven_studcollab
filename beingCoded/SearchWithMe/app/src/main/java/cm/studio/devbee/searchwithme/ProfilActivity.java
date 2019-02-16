@@ -1,5 +1,6 @@
 package cm.studio.devbee.searchwithme;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,18 +62,17 @@ public class ProfilActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful ()){
-
                     if ( task.getResult ().exists ()){
-
                         Toast.makeText(ProfilActivity.this,"reception des donnes utilisateur termine",Toast.LENGTH_SHORT).show ();
                         String myname = task.getResult ().getString ("name");
                         String myphone = task.getResult ().getString ("phone");
                         String myresidence = task.getResult ().getString ("residence");
-                        String myimage = task.getResult ().getString ("image");
+                       // String myimage = task.getResult ().getString ("image");
                         //mImageUri=Uri.parse (myimage);
                         name.setText ( myname );
                         phone.setText ( myphone );
                         domicile.setText ( myresidence );
+                        getSupportActionBar ().setTitle ( myname );
                       /*  RequestOptions placeRquestHolder =new RequestOptions ();
                         placeRquestHolder.placeholder ( R.mipmap.user_prefere);
                         Glide.with (HomeActivity.this).setDefaultRequestOptions (  placeRquestHolder).load ( myimage ).into ( circleImageView );
@@ -97,4 +97,9 @@ public class ProfilActivity extends AppCompatActivity {
 
     }
 
+    public void modifier(View view) {
+        Intent gotoSetup =new Intent ( ProfilActivity.this,HomeActivity.class );
+        startActivity ( gotoSetup );
+
+    }
 }
