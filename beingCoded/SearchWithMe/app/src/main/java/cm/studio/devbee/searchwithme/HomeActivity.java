@@ -9,19 +9,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +58,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar ( toolbar );
         getSupportActionBar ().setTitle ( "parametre du profil" );
         liaison();
-        CheckAndroidVersion ();
         progressBar.setVisibility ( View.INVISIBLE );
 
         savebutton.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void liaison(){
         firebaseFirestore=FirebaseFirestore.getInstance ();
-        circleImageView=findViewById ( R.id.setupImage );
+        circleImageView=findViewById ( R.id.profil_mage );
         name=findViewById ( R.id.setupName );
         phone=findViewById ( R.id.setupPhoneNumber );
         domicile=findViewById ( R.id.setupQuartier );
@@ -239,7 +233,7 @@ public class HomeActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), result.getUri());
-                    ((CircleImageView)findViewById(R.id.setupImage)).setImageBitmap(bitmap);
+                    ((CircleImageView)findViewById(R.id.profil_mage )).setImageBitmap(bitmap);
 
                 } catch (IOException e) {
                     e.printStackTrace();

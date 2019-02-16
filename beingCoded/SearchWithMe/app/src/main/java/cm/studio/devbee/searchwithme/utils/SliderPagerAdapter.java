@@ -1,4 +1,4 @@
-package cm.studio.devbee.searchwithme;
+package cm.studio.devbee.searchwithme.utils;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import cm.studio.devbee.searchwithme.R;
 
 public class SliderPagerAdapter extends PagerAdapter {
     private Context mcontext;

@@ -1,24 +1,38 @@
 package cm.studio.devbee.searchwithme;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cm.studio.devbee.searchwithme.utils.Slider;
+import cm.studio.devbee.searchwithme.utils.SliderPagerAdapter;
 
 public class RechercheActivity extends AppCompatActivity {
     private Toolbar toolbaracceuil;
     private FloatingActionButton floatingActionButton;
     private List<Slider> slideList;
     private ViewPager viewPagerSlider;
+    private FirebaseAuth mfireAuth;
+    private FirebaseFirestore mfirebasefirestore;
+    private String user_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +42,8 @@ public class RechercheActivity extends AppCompatActivity {
         setSupportActionBar ( toolbaracceuil );
         getSupportActionBar ().setTitle ( "flux de recherche" );
         floatingActionButton=findViewById(R.id.floatingActionButton);
+        mfireAuth=FirebaseAuth.getInstance ();
+        mfirebasefirestore=FirebaseFirestore.getInstance ();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +76,7 @@ public class RechercheActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.ic_profil:{
-                Intent gotoprofil = new Intent(RechercheActivity.this,HomeActivity.class);
+                Intent gotoprofil = new Intent(RechercheActivity.this,ProfilActivity.class);
                 startActivity(gotoprofil);
                 break;
             }
@@ -69,9 +85,42 @@ public class RechercheActivity extends AppCompatActivity {
                 startActivity(gotologin);
                 break;
             }
+            case R.id.ic_parametre_profil:{
+                Intent gotoparametre= new Intent(RechercheActivity.this,HomeActivity.class);
+                startActivity(gotoparametre);
+                break;
+            }
 
 
         }
         return super.onOptionsItemSelected(item);
     }
+    /*
+    @Override
+    protected void onStart() {
+        super.onStart ();
+        FirebaseUser current_usr = FirebaseAuth.getInstance ().getCurrentUser ();
+        if(current_usr==null){
+            Intent gotologin = new Intent(RechercheActivity.this,LoginActivity.class);
+            startActivity(gotologin);
+           finish ();
+        }else{
+            user_id=mfireAuth.getCurrentUser ().getUid ();
+            mfirebasefirestore.collection ( "User" ).document (user_id).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot> () {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful ()){
+                        if (!task.getResult ().exists ()){
+                            Intent stupIntent = new Intent ( RechercheActivity.this,HomeActivity.class );
+                            startActivity ( stupIntent );
+                            finish ();
+                        }
+                    }else{
+                        String error =task.getException ().getMessage ();
+                        Toast.makeText ( RechercheActivity.this,error,Toast.LENGTH_LONG ).show ();
+                    }
+                }
+            } );
+        }
+    }*/
 }

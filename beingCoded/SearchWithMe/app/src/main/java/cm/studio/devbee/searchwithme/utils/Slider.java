@@ -1,4 +1,4 @@
-package cm.studio.devbee.searchwithme;
+package cm.studio.devbee.searchwithme.utils;
 
 public class Slider {
 
