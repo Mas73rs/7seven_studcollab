@@ -52,6 +52,7 @@ public class PostActivity extends AppCompatActivity {
     private EditText description_text;
     private EditText whre_text;
     private FirebaseFirestore firebaseFirestore;
+    private EditText title;
 
 
     @Override
@@ -71,6 +72,7 @@ public class PostActivity extends AppCompatActivity {
         description_text=findViewById ( R.id.description_text );
         whre_text=findViewById ( R.id.lost_lieu );
         progressBar.setVisibility ( View.INVISIBLE );
+        title=findViewById(R.id.title);
 
         imagePost.setOnClickListener ( new View.OnClickListener () {
             @Override
@@ -78,43 +80,44 @@ public class PostActivity extends AppCompatActivity {
                 CheckAndroidVersion();
             }
         } );
+        //////////////////////////////////////////////////////////////////
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 final String user_description = description_text.getText().toString();
                 final String lieu=whre_text.getText().toString();
+                final String titre =title.getText().toString();
                 if (!TextUtils.isEmpty(user_description)&&!TextUtils.isEmpty(lieu)&&imagePost!=null){
                     current_user_id =firebaseAuth.getCurrentUser().getUid();
                     final String random =FieldValue.serverTimestamp ().toString ();
-                    StorageReference image_path= storageReference.child("Image_de_profile").child(random + " .jpg ");
-                    image_path.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
+                    StorageReference file_path= storageReference.child("post_images").child(random + " .jpg ");
+                    file_path.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
                         @Override
                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                             if (task.isSuccessful()){
-                                Uri download=task.getResult().getUploadSessionUri ();
+                                String download=task.getResult().getUploadSessionUri ().toString();
                                 //mImageUri=download;
                                 Map <String,Object> user_post = new HashMap (  );
-                                user_post.put ( "image",download.toString () );
+                                user_post.put ( "image",download );
+                                user_post.put ( "titre",titre );
                                 user_post.put ( "desc",user_description );
                                 user_post.put ( "lieu",lieu );
                                 user_post.put ( "temp",FieldValue.serverTimestamp () );
-                                firebaseFirestore.collection ( "pots" ).document ( current_user_id ).set ( user_post ).addOnCompleteListener ( new OnCompleteListener<Void> () {
+                                firebaseFirestore.collection ( "pots" ).add(user_post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
-                                        if (task.isSuccessful ()){
-                                            Toast.makeText ( PostActivity.this ,"recherche envoyer aux utilisateur",Toast.LENGTH_LONG).show ();
-                                            Intent goToAcceuille = new Intent ( PostActivity.this,RechercheActivity.class );
-                                            startActivity ( goToAcceuille );
-                                            finish ();
-                                        }else {
-
-                                            String error=task.getException ().getMessage ();
-                                            Toast.makeText ( PostActivity.this ,error,Toast.LENGTH_LONG).show ();
-                                        }
-                                        progressBar.setVisibility(View.INVISIBLE);
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                       if (task.isSuccessful()){
+                                           Intent gotoRecherche=new Intent(PostActivity.this,RechercheActivity.class);
+                                           startActivity(gotoRecherche);
+                                           finish();
+                                           Toast.makeText(PostActivity.this,"envoie effectuer",Toast.LENGTH_LONG).show();
+                                       }else{
+                                           String error = task.getException().getMessage();
+                                           Toast.makeText(PostActivity.this,error,Toast.LENGTH_LONG).show();
+                                       }
                                     }
-                                } );
+                                });
                                 Toast.makeText(PostActivity.this,"enregistre ",Toast.LENGTH_LONG).show ();
                               /*  Intent gotoacceuille = new Intent(HomeActivity.this,RechercheActivity.class);
                                 startActivity ( gotoacceuille );
