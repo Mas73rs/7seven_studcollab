@@ -102,7 +102,7 @@ public class PostActivity extends AppCompatActivity {
                                 String download=task.getResult().getUploadSessionUri ().toString();
                                 //mImageUri=download;
                                 Map <String,Object> user_post = new HashMap (  );
-                                user_post.put ( "image",download );
+                                user_post.put ( "image_url",download );
                                 user_post.put ( "titre",titre );
                                 user_post.put ( "desc",user_description );
                                 user_post.put ( "lieu",lieu );
