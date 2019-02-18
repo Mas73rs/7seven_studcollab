@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -74,6 +76,7 @@ public class PostActivity extends AppCompatActivity {
         progressBar.setVisibility ( View.INVISIBLE );
         title=findViewById(R.id.title);
 
+
         imagePost.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
@@ -108,7 +111,7 @@ public class PostActivity extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
                                        if (task.isSuccessful()){
-                                           Intent gotoRecherche=new Intent(PostActivity.this,RechercheActivity.class);
+                                           Intent gotoRecherche=new Intent(PostActivity.this,ProfilActivity.class);
                                            startActivity(gotoRecherche);
                                            finish();
                                            Toast.makeText(PostActivity.this,"envoie effectuer",Toast.LENGTH_LONG).show();

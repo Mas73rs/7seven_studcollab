@@ -2,7 +2,10 @@ package cm.studio.devbee.searchwithme;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
+import cm.studio.devbee.searchwithme.fragment.AccountFragment;
+import cm.studio.devbee.searchwithme.fragment.HomeFragment;
+import cm.studio.devbee.searchwithme.fragment.NotificationFragment;
 import cm.studio.devbee.searchwithme.utils.Slider;
 import cm.studio.devbee.searchwithme.utils.SliderPagerAdapter;
 
@@ -33,6 +40,12 @@ public class RechercheActivity extends AppCompatActivity {
     private FirebaseAuth mfireAuth;
     private FirebaseFirestore mfirebasefirestore;
     private String user_id;
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
+    private HomeFragment homeFragment;
+    private NotificationFragment notification;
+    private AccountFragment accountFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +56,10 @@ public class RechercheActivity extends AppCompatActivity {
         getSupportActionBar ().setTitle ( "flux de recherche" );
         floatingActionButton=findViewById(R.id.floatingActionButton);
         mfireAuth=FirebaseAuth.getInstance ();
+        bottomNavigationView=findViewById(R.id.bottomNavigationView);
+
+        frameLayout=findViewById(R.id.frameLayout);
+
         mfirebasefirestore=FirebaseFirestore.getInstance ();
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,8 +79,30 @@ public class RechercheActivity extends AppCompatActivity {
         slideList.add(new Slider(R.drawable.slide2,"ne perdez plus jamais " +
                 "ce qui vous est precieux"));
         SliderPagerAdapter adapter = new SliderPagerAdapter(RechercheActivity.this,slideList);
-        viewPagerSlider.setAdapter(adapter);
+//        viewPagerSlider.setAdapter(adapter);
 
+        homeFragment=new HomeFragment();
+        notification = new NotificationFragment();
+        accountFragment=new AccountFragment();
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.ic_home:
+                        replace(new HomeFragment());
+                       return true;
+                    case R.id.ic_notification:
+                        replace(new NotificationFragment());
+                        return true;
+                    case R.id.ic_account:
+                        replace(new AccountFragment());
+                        return true;
+                        default:
+                            return false;
+                }
+
+            }
+        });
     }
 
     @Override
@@ -94,6 +133,14 @@ public class RechercheActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void replace(Fragment fragment){
+
+        FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout,fragment);
+        fragmentTransaction.commit();
+
     }
     /*
     @Override
