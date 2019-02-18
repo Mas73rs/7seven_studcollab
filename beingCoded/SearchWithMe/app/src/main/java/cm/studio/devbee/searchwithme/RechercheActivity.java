@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,6 +47,7 @@ public class RechercheActivity extends AppCompatActivity {
     private NotificationFragment notification;
     private AccountFragment accountFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class RechercheActivity extends AppCompatActivity {
         floatingActionButton=findViewById(R.id.floatingActionButton);
         mfireAuth=FirebaseAuth.getInstance ();
         bottomNavigationView=findViewById(R.id.bottomNavigationView);
+
 
         frameLayout=findViewById(R.id.frameLayout);
 
@@ -103,6 +106,7 @@ public class RechercheActivity extends AppCompatActivity {
 
             }
         });
+        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout,new HomeFragment()).commit();
     }
 
     @Override

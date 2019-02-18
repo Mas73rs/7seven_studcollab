@@ -37,7 +37,7 @@ public class ProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_profil );
-       toolbar=findViewById ( R.id.profil_activity_toolbar );
+      // toolbar=findViewById ( R.id.profil_activity_toolbar );
         setSupportActionBar ( toolbar );
        // progressBar=findViewById ( R.id.progressBar2 );
         //progressBar.setVisibility ( View.VISIBLE );

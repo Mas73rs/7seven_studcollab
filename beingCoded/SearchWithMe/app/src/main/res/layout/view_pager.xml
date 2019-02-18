@@ -7,7 +7,7 @@
         android:id="@+id/slider_pager"
         android:layout_width="0dp"
         android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/main_name_user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

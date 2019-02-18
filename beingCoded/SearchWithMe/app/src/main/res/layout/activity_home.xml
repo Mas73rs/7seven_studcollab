@@ -97,7 +97,7 @@
         android:background="@drawable/button_background"
         android:text="enregister"
         android:textAllCaps="false"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#fff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

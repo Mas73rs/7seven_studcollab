@@ -44,7 +44,6 @@ public class PostActivity extends AppCompatActivity {
     private Toolbar toolbarpost;
     private ImageView imagePost;
     private Button postButton;
-    private Uri postUri;
     private ProgressBar progressBar;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;
@@ -75,6 +74,7 @@ public class PostActivity extends AppCompatActivity {
         whre_text=findViewById ( R.id.lost_lieu );
         progressBar.setVisibility ( View.INVISIBLE );
         title=findViewById(R.id.title);
+        current_user_id =firebaseAuth.getCurrentUser().getUid();
 
 
         imagePost.setOnClickListener ( new View.OnClickListener () {
@@ -92,7 +92,7 @@ public class PostActivity extends AppCompatActivity {
                 final String lieu=whre_text.getText().toString();
                 final String titre =title.getText().toString();
                 if (!TextUtils.isEmpty(user_description)&&!TextUtils.isEmpty(lieu)&&imagePost!=null){
-                    current_user_id =firebaseAuth.getCurrentUser().getUid();
+                    //current_user_id =firebaseAuth.getCurrentUser().getUid();
                     final String random =FieldValue.serverTimestamp ().toString ();
                     StorageReference file_path= storageReference.child("post_images").child(random + " .jpg ");
                     file_path.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
@@ -106,12 +106,13 @@ public class PostActivity extends AppCompatActivity {
                                 user_post.put ( "titre",titre );
                                 user_post.put ( "desc",user_description );
                                 user_post.put ( "lieu",lieu );
+                                user_post.put ( "user_id",current_user_id );
                                 user_post.put ( "temp",FieldValue.serverTimestamp () );
                                 firebaseFirestore.collection ( "pots" ).add(user_post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentReference> task) {
                                        if (task.isSuccessful()){
-                                           Intent gotoRecherche=new Intent(PostActivity.this,ProfilActivity.class);
+                                           Intent gotoRecherche=new Intent(PostActivity.this,RechercheActivity.class);
                                            startActivity(gotoRecherche);
                                            finish();
                                            Toast.makeText(PostActivity.this,"envoie effectuer",Toast.LENGTH_LONG).show();
