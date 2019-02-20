@@ -123,6 +123,13 @@ public class RechercheActivity extends AppCompatActivity {
                 startActivity(gotologin);
                 break;
             }
+            case R.id.ic_parametre_profil:{
+                Intent gotoparametre= new Intent(RechercheActivity.this,HomeActivity.class);
+                startActivity(gotoparametre);
+                break;
+            }
+
+
         }
         return super.onOptionsItemSelected(item);
     }

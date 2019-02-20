@@ -42,6 +42,7 @@ public class AccountFragment extends Fragment {
     private String user_id;
     private ProgressBar progressBar;
     private View v;
+    public Button gotomodif;
 
     public AccountFragment() {
         // Required empty public constructor
@@ -60,6 +61,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void liaison(){
+        gotomodif=v.findViewById(R.id.goTomodification);
         firebaseFirestore=FirebaseFirestore.getInstance ();
         // circleImageView=findViewById ( R.id.profil_mage );
         name=v.findViewById ( R.id.profil_user_name );
@@ -71,6 +73,13 @@ public class AccountFragment extends Fragment {
         progressAccount=v.findViewById(R.id.progressBarAccount);
         storageReference=FirebaseStorage.getInstance ().getReference ();
         user_id=firebaseAuth.getCurrentUser ().getUid ();
+        gotomodif.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotomodif =new Intent(getActivity(),HomeActivity.class);
+                startActivity(gotomodif);
+            }
+        });
         //savebutton.setEnabled ( false );
 
         firebaseFirestore.collection ("User").document (user_id).get ().addOnCompleteListener ( new OnCompleteListener<DocumentSnapshot>() {

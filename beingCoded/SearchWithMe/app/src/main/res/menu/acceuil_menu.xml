@@ -11,4 +11,7 @@
         android:id="@+id/ic_recherche"
         android:icon="@drawable/ic_rechercher"
         app:showAsAction="always"/>
+    <item android:title="parametre"
+        android:id="@+id/ic_parametre_profil"
+        />
 </menu>
