@@ -7,17 +7,8 @@
         android:id="@+id/ic_deconnexion"
         android:icon="@drawable/ic_exit"
         android:orderInCategory="1"/>
-    <item android:title="Profile"
-        android:id="@+id/ic_profil"
-        android:icon="@drawable/ic_user"
-        app:showAsAction="always"
-        android:orderInCategory="2"
-        />
     <item android:title="recherche"
         android:id="@+id/ic_recherche"
         android:icon="@drawable/ic_rechercher"
         app:showAsAction="always"/>
-    <item android:title="parametre"
-        android:id="@+id/ic_parametre_profil"
-        />
 </menu>

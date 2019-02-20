@@ -118,23 +118,11 @@ public class RechercheActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.ic_profil:{
-                Intent gotoprofil = new Intent(RechercheActivity.this,ProfilActivity.class);
-                startActivity(gotoprofil);
-                break;
-            }
             case R.id.ic_deconnexion:{
                 Intent gotologin = new Intent(RechercheActivity.this,LoginActivity.class);
                 startActivity(gotologin);
                 break;
             }
-            case R.id.ic_parametre_profil:{
-                Intent gotoparametre= new Intent(RechercheActivity.this,HomeActivity.class);
-                startActivity(gotoparametre);
-                break;
-            }
-
-
         }
         return super.onOptionsItemSelected(item);
     }
