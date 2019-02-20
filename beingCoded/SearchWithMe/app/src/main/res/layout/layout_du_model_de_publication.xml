@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@mipmap/user_prefere" />
@@ -41,28 +41,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:text="user name "
                 android:textColor="#000"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/main_image-user"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/main_time_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="Date de publication"
-                app:layout_constraintStart_toEndOf="@+id/main_image-user"
-                app:layout_constraintTop_toBottomOf="@+id/main_name_user" />
-
             <ImageView
                 android:id="@+id/main_post_image_user"
                 android:layout_width="wrap_content"
                 android:layout_height="200dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.764"
@@ -71,7 +61,7 @@
                 app:srcCompat="@drawable/slide2" />
 
             <TextView
-                android:id="@+id/main_text_user"
+              android:id="@+id/user_desc"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -91,15 +81,15 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:text="Titre du post"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/main_post_image_user"
-                app:layout_constraintEnd_toEndOf="@+id/main_time_user"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/main_time_user"
-                app:layout_constraintTop_toBottomOf="@+id/main_time_user" />
+                app:layout_constraintStart_toEndOf="@+id/main_image-user"
+                app:layout_constraintTop_toBottomOf="@+id/main_name_user"
+                app:layout_constraintVertical_bias="0.058" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>

@@ -23,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -91,50 +93,52 @@ public class PostActivity extends AppCompatActivity {
                 final String user_description = description_text.getText().toString();
                 final String lieu=whre_text.getText().toString();
                 final String titre =title.getText().toString();
-                if (!TextUtils.isEmpty(user_description)&&!TextUtils.isEmpty(lieu)&&imagePost!=null){
-                    //current_user_id =firebaseAuth.getCurrentUser().getUid();
-                    final String random =FieldValue.serverTimestamp ().toString ();
-                    StorageReference file_path= storageReference.child("post_images").child(random + " .jpg ");
-                    file_path.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot> () {
-                        @Override
-                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                            if (task.isSuccessful()){
-                                String download=task.getResult().getUploadSessionUri ().toString();
-                                //mImageUri=download;
-                                Map <String,Object> user_post = new HashMap (  );
-                                user_post.put ( "image_url",download );
-                                user_post.put ( "titre",titre );
-                                user_post.put ( "desc",user_description );
-                                user_post.put ( "lieu",lieu );
-                                user_post.put ( "user_id",current_user_id );
-                                user_post.put ( "temp",FieldValue.serverTimestamp () );
-                                firebaseFirestore.collection ( "pots" ).add(user_post).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<DocumentReference> task) {
-                                       if (task.isSuccessful()){
-                                           Intent gotoRecherche=new Intent(PostActivity.this,RechercheActivity.class);
-                                           startActivity(gotoRecherche);
-                                           finish();
-                                           Toast.makeText(PostActivity.this,"envoie effectuer",Toast.LENGTH_LONG).show();
-                                       }else{
-                                           String error = task.getException().getMessage();
-                                           Toast.makeText(PostActivity.this,error,Toast.LENGTH_LONG).show();
-                                       }
+
+                if (!TextUtils.isEmpty(user_description)&&!TextUtils.isEmpty(lieu)&&!TextUtils.isEmpty(titre)&&imagePost!=null){
+                    StorageReference filepath =storageReference.child("user_post_image").child(current_user_id+".jpg");
+                    filepath.putFile(postImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                       @Override
+                       public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                           String image_post = task.getResult().toString();
+                           Map<String,String> user_map = new HashMap<>();
+                           user_map.put("user_description",user_description);
+                           user_map.put("lieu",lieu);
+                           user_map.put("titre",titre);
+                           user_map.put("image_url",image_post);
+                           user_map.put("user_id",current_user_id);
+                           firebaseFirestore.collection("user_pots").add(user_map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                               @Override
+                               public void onComplete(@NonNull Task<DocumentReference> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(PostActivity.this,"envoye",Toast.LENGTH_LONG).show();
+                                        Intent rechercheIntent = new Intent(PostActivity.this,RechercheActivity.class);
+                                        startActivity(rechercheIntent);
+                                        finish();
+
+                                    }   else {
+                                        String error = task.getException().getMessage();
+                                        Toast.makeText(PostActivity.this,error,Toast.LENGTH_LONG).show();
+
                                     }
-                                });
-                                Toast.makeText(PostActivity.this,"enregistre ",Toast.LENGTH_LONG).show ();
-                              /*  Intent gotoacceuille = new Intent(HomeActivity.this,RechercheActivity.class);
-                                startActivity ( gotoacceuille );
-                                finish ();*/
+                               }
+                           });
+                           /*firebaseFirestore.collection("user_pots").document(current_user_id).set(user_map).addOnFailureListener(new OnFailureListener() {
+                               @Override
+                               public void onFailure(@NonNull Exception e) {
+                                   Toast.makeText(PostActivity.this,"error "+e.getMessage(),Toast.LENGTH_LONG).show();
+                               }
+                           }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                               @Override
+                               public void onSuccess(Void aVoid) {
+                                   Toast.makeText(PostActivity.this,"envoye",Toast.LENGTH_LONG).show();
+                                   Intent rechercheIntent = new Intent(PostActivity.this,RechercheActivity.class);
+                                   startActivity(rechercheIntent);
+                                   finish();
+                               }
+                           });*/
+                       }
+                   });
 
-                            }else{
-                                String error= task.getException().getMessage();
-                                Toast.makeText(PostActivity.this,error,Toast.LENGTH_LONG).show ();
-                                progressBar.setVisibility(View.INVISIBLE);
-                            }
-
-                        }
-                    });
                 }
             }
         });
